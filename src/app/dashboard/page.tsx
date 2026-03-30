@@ -1,0 +1,67 @@
+import { createSupabaseServer } from "@/lib/supabase-server";
+import { Users, UserPlus, UserCheck, TrendingUp } from "lucide-react";
+import type { LeadStatus } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
+
+async function getStats() {
+  const supabase = await createSupabaseServer();
+  const { data: leads } = await supabase
+    .from("leads")
+    .select("status, created_at");
+
+  if (!leads) return { total: 0, novos: 0, qualificados: 0, fechados: 0, recentLeads: [] };
+
+  const now = new Date();
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+  return {
+    total: leads.length,
+    novos: leads.filter((l) => l.status === "novo").length,
+    qualificados: leads.filter((l) => l.status === "qualificado").length,
+    fechados: leads.filter((l) => l.status === "fechado").length,
+    thisWeek: leads.filter((l) => new Date(l.created_at) >= sevenDaysAgo).length,
+  };
+}
+
+export default async function DashboardPage() {
+  const stats = await getStats();
+
+  const cards = [
+    { label: "Total de Leads", value: stats.total, icon: Users, color: "bg-blue-50 text-blue-600" },
+    { label: "Novos", value: stats.novos, icon: UserPlus, color: "bg-yellow-50 text-yellow-600" },
+    { label: "Qualificados", value: stats.qualificados, icon: UserCheck, color: "bg-purple-50 text-purple-600" },
+    { label: "Fechados", value: stats.fechados, icon: TrendingUp, color: "bg-green-50 text-green-600" },
+  ];
+
+  return (
+    <div>
+      <h1 className="mb-6 text-2xl font-bold text-gray-900">Dashboard</h1>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {cards.map((card) => (
+          <div
+            key={card.label}
+            className="rounded-xl border border-gray-200 bg-white p-5"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">{card.label}</p>
+                <p className="mt-1 text-3xl font-bold text-gray-900">{card.value}</p>
+              </div>
+              <div className={`rounded-lg p-2.5 ${card.color}`}>
+                <card.icon className="h-5 w-5" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 rounded-xl border border-gray-200 bg-white p-5">
+        <p className="text-sm text-gray-500">
+          Leads esta semana: <span className="font-semibold text-gray-900">{stats.thisWeek}</span>
+        </p>
+      </div>
+    </div>
+  );
+}
