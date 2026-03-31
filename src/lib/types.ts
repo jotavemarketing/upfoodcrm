@@ -21,3 +21,20 @@ export const STATUS_CONFIG: Record<LeadStatus, { label: string; color: string }>
   fechado: { label: "Fechado", color: "bg-green-100 text-green-700" },
   perdido: { label: "Perdido", color: "bg-gray-100 text-gray-500" },
 };
+
+export const STATUS_ORDER: LeadStatus[] = [
+  "novo", "contatado", "qualificado", "proposta", "fechado", "perdido",
+];
+
+export type AgendamentoStatus = "pendente" | "realizado" | "cancelado";
+
+export interface Agendamento {
+  id: string;
+  lead_id: string;
+  titulo: string;
+  descricao: string;
+  data_hora: string;
+  status: AgendamentoStatus;
+  created_at: string;
+  leads?: { name: string; company: string };
+}

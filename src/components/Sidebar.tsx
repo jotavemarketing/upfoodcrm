@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, UserPlus, KanbanSquare, Building2, CalendarDays, LogOut, Menu, X } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { useState } from "react";
 
 const links = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/leads", label: "Leads", icon: Users },
+  { href: "/dashboard/kanban", label: "Kanban", icon: KanbanSquare },
+  { href: "/dashboard/clientes", label: "Clientes", icon: Building2 },
+  { href: "/dashboard/agendamentos", label: "Agendamentos", icon: CalendarDays },
+  { href: "/dashboard/cadastro", label: "Cadastro", icon: UserPlus },
 ];
 
 export function Sidebar() {

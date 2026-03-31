@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { LeadStatusBadge } from "./LeadStatusBadge";
 import { STATUS_CONFIG, type Lead, type LeadStatus } from "@/lib/types";
 import { Search, ChevronDown, MessageSquare, X } from "lucide-react";
 
 export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
+  const router = useRouter();
   const [leads, setLeads] = useState(initialLeads);
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("todos");
@@ -26,7 +28,8 @@ export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
     return matchesSearch && matchesStatus;
   });
 
-  function openEdit(lead: Lead) {
+  function openEdit(e: React.MouseEvent, lead: Lead) {
+    e.stopPropagation();
     setEditingLead(lead);
     setNotes(lead.notes || "");
     setNewStatus(lead.status);
@@ -115,7 +118,11 @@ export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
               </tr>
             ) : (
               filtered.map((lead) => (
-                <tr key={lead.id} className="hover:bg-gray-50">
+                <tr
+                  key={lead.id}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors"
+                  onClick={() => router.push(`/dashboard/leads/${lead.id}`)}
+                >
                   <td className="px-4 py-3">
                     <div>
                       <p className="font-medium text-gray-900">{lead.name}</p>
@@ -135,9 +142,9 @@ export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
                   </td>
                   <td className="px-4 py-3">
                     <button
-                      onClick={() => openEdit(lead)}
+                      onClick={(e) => openEdit(e, lead)}
                       className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700"
-                      title="Editar lead"
+                      title="Editar rápido"
                     >
                       <MessageSquare className="h-4 w-4" />
                     </button>
@@ -172,26 +179,20 @@ export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
             </div>
 
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
-                Status
-              </label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Status</label>
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value as LeadStatus)}
                 className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               >
                 {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
-                  <option key={key} value={key}>
-                    {cfg.label}
-                  </option>
+                  <option key={key} value={key}>{cfg.label}</option>
                 ))}
               </select>
             </div>
 
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
-                Notas
-              </label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Notas</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
