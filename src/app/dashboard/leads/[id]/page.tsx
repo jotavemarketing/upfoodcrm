@@ -7,7 +7,7 @@ import { STATUS_CONFIG, type Lead, type LeadStatus, type Agendamento, type Agend
 import { LeadStatusBadge } from "@/components/LeadStatusBadge";
 import {
   ArrowLeft, Mail, Phone, Building2, DollarSign, Calendar,
-  Pencil, Check, X, Plus, Trash2, Clock,
+  Pencil, Check, X, Plus, Trash2, Clock, Instagram,
 } from "lucide-react";
 
 const AGENDAMENTO_STATUS_CONFIG: Record<AgendamentoStatus, { label: string; color: string }> = {
@@ -179,6 +179,20 @@ export default function LeadDetailPage() {
               />
             </div>
             <div>
+              <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-gray-500">
+                <Instagram className="h-3.5 w-3.5 text-pink-500" /> Instagram
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">@</span>
+                <input
+                  value={(form.instagram ?? "").replace("@", "")}
+                  onChange={(e) => setForm((p) => ({ ...p, instagram: e.target.value }))}
+                  placeholder="usuario"
+                  className="w-full rounded-lg border border-gray-300 py-2 pl-7 pr-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+              </div>
+            </div>
+            <div>
               <label className="mb-1 block text-xs font-medium text-gray-500">Status</label>
               <select
                 value={form.status ?? "novo"}
@@ -252,6 +266,22 @@ export default function LeadDetailPage() {
                 <p className="text-sm font-medium text-gray-900">{formatDate(lead.created_at)}</p>
               </div>
             </div>
+            {lead.instagram && (
+              <div className="flex items-start gap-3">
+                <Instagram className="mt-0.5 h-4 w-4 shrink-0 text-pink-500" />
+                <div>
+                  <p className="text-xs text-gray-400">Instagram</p>
+                  <a
+                    href={`https://instagram.com/${lead.instagram.replace("@", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-3 py-1 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                  >
+                    {lead.instagram.startsWith("@") ? lead.instagram : `@${lead.instagram}`}
+                  </a>
+                </div>
+              </div>
+            )}
             {lead.notes && (
               <div className="sm:col-span-2">
                 <p className="text-xs text-gray-400 mb-1">Notas</p>

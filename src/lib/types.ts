@@ -8,6 +8,7 @@ export interface Lead {
   company: string;
   revenue_range: string;
   status: LeadStatus;
+  instagram: string;
   notes: string;
   created_at: string;
   updated_at: string;

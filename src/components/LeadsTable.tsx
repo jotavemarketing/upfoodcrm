@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { LeadStatusBadge } from "./LeadStatusBadge";
 import { STATUS_CONFIG, type Lead, type LeadStatus } from "@/lib/types";
-import { Search, ChevronDown, MessageSquare, X } from "lucide-react";
+import { Search, ChevronDown, MessageSquare, X, Instagram } from "lucide-react";
 
 export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
   const router = useRouter();
@@ -128,6 +128,18 @@ export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
                       <p className="font-medium text-gray-900">{lead.name}</p>
                       <p className="text-xs text-gray-500">{lead.email}</p>
                       <p className="text-xs text-gray-400">{lead.phone}</p>
+                      {lead.instagram && (
+                        <a
+                          href={`https://instagram.com/${lead.instagram.replace("@", "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="mt-1 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-2 py-0.5 text-xs font-medium text-white hover:opacity-90 transition-opacity"
+                        >
+                          <Instagram className="h-3 w-3" />
+                          {lead.instagram.startsWith("@") ? lead.instagram : `@${lead.instagram}`}
+                        </a>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-gray-700">{lead.company}</td>
