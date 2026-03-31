@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { STATUS_CONFIG, type LeadStatus } from "@/lib/types";
-import { CheckCircle, AlertCircle, Instagram } from "lucide-react";
+import { CheckCircle, AlertCircle } from "lucide-react";
+import { InstagramIcon } from "@/components/InstagramIcon";
 
 const REVENUE_RANGES = [
   "Até R$ 50 mil/mês",
@@ -123,7 +124,7 @@ export default function CadastroPage() {
 
           <div>
             <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
-              <Instagram className="h-4 w-4 text-pink-500" /> Instagram
+              <InstagramIcon className="h-4 w-4 text-pink-500" /> Instagram
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">@</span>

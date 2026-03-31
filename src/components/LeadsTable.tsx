@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { LeadStatusBadge } from "./LeadStatusBadge";
 import { STATUS_CONFIG, type Lead, type LeadStatus } from "@/lib/types";
-import { Search, ChevronDown, MessageSquare, X, Instagram } from "lucide-react";
+import { Search, ChevronDown, MessageSquare, X } from "lucide-react";
+import { InstagramIcon } from "./InstagramIcon";
 
 export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
   const router = useRouter();
@@ -127,7 +128,7 @@ export function LeadsTable({ initialLeads }: { initialLeads: Lead[] }) {
                           onClick={(e) => e.stopPropagation()}
                           className="mt-1 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-2 py-0.5 text-xs font-medium text-white hover:opacity-90 transition-opacity"
                         >
-                          <Instagram className="h-3 w-3" />
+                          <InstagramIcon className="h-3 w-3" />
                           {lead.instagram.startsWith("@") ? lead.instagram : `@${lead.instagram}`}
                         </a>
                       )}

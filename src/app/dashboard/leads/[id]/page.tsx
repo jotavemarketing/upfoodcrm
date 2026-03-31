@@ -7,8 +7,9 @@ import { STATUS_CONFIG, type Lead, type LeadStatus, type Agendamento, type Agend
 import { LeadStatusBadge } from "@/components/LeadStatusBadge";
 import {
   ArrowLeft, Mail, Phone, Building2, DollarSign, Calendar,
-  Pencil, Check, X, Plus, Trash2, Clock, Instagram,
+  Pencil, Check, X, Plus, Trash2, Clock,
 } from "lucide-react";
+import { InstagramIcon } from "@/components/InstagramIcon";
 
 const AGENDAMENTO_STATUS_CONFIG: Record<AgendamentoStatus, { label: string; color: string }> = {
   pendente: { label: "Pendente", color: "bg-yellow-100 text-yellow-700" },
@@ -180,7 +181,7 @@ export default function LeadDetailPage() {
             </div>
             <div>
               <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-gray-500">
-                <Instagram className="h-3.5 w-3.5 text-pink-500" /> Instagram
+                <InstagramIcon className="h-3.5 w-3.5 text-pink-500" /> Instagram
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">@</span>
@@ -260,7 +261,7 @@ export default function LeadDetailPage() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Instagram className="mt-0.5 h-4 w-4 shrink-0 text-pink-500" />
+              <InstagramIcon className="mt-0.5 h-4 w-4 shrink-0 text-pink-500" />
               <div>
                 <p className="text-xs text-gray-400">Instagram</p>
                 {lead.instagram ? (
