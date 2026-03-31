@@ -260,17 +260,10 @@ export default function LeadDetailPage() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" />
+              <Instagram className="mt-0.5 h-4 w-4 shrink-0 text-pink-500" />
               <div>
-                <p className="text-xs text-gray-400">Cadastrado em</p>
-                <p className="text-sm font-medium text-gray-900">{formatDate(lead.created_at)}</p>
-              </div>
-            </div>
-            {lead.instagram && (
-              <div className="flex items-start gap-3">
-                <Instagram className="mt-0.5 h-4 w-4 shrink-0 text-pink-500" />
-                <div>
-                  <p className="text-xs text-gray-400">Instagram</p>
+                <p className="text-xs text-gray-400">Instagram</p>
+                {lead.instagram ? (
                   <a
                     href={`https://instagram.com/${lead.instagram.replace("@", "")}`}
                     target="_blank"
@@ -279,9 +272,18 @@ export default function LeadDetailPage() {
                   >
                     {lead.instagram.startsWith("@") ? lead.instagram : `@${lead.instagram}`}
                   </a>
-                </div>
+                ) : (
+                  <p className="text-sm text-gray-400">Não informado</p>
+                )}
               </div>
-            )}
+            </div>
+            <div className="flex items-start gap-3">
+              <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" />
+              <div>
+                <p className="text-xs text-gray-400">Cadastrado em</p>
+                <p className="text-sm font-medium text-gray-900">{formatDate(lead.created_at)}</p>
+              </div>
+            </div>
             {lead.notes && (
               <div className="sm:col-span-2">
                 <p className="text-xs text-gray-400 mb-1">Notas</p>
