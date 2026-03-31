@@ -15,10 +15,7 @@ export default function LoginPage() {
     setError("");
 
     const supabase = createSupabaseBrowser();
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
     if (authError) {
       setError("Email ou senha incorretos.");
@@ -30,44 +27,38 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-gray-900">UpFood CRM</h1>
-          <p className="mt-1 text-sm text-gray-500">Acesse o painel de leads</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">UpFood CRM</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Acesse o painel de leads</p>
         </div>
         <form
           onSubmit={handleSubmit}
-          className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
+          className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm"
         >
           <div className="flex flex-col gap-4">
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
-                Email
-              </label>
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
-                Senha
-              </label>
+              <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Senha</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
-            {error && (
-              <p className="text-center text-sm text-red-500">{error}</p>
-            )}
+            {error && <p className="text-center text-sm text-red-500">{error}</p>}
             <button
               type="submit"
               disabled={loading}

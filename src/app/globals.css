@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-primary: #DC2626;
   --color-primary-dark: #B91C1C;
@@ -10,4 +12,9 @@
 body {
   background: #F9FAFB;
   color: #111827;
+}
+
+.dark body {
+  background: #0a0f1e;
+  color: #f1f5f9;
 }

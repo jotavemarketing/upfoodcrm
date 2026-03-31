@@ -18,14 +18,14 @@ export default async function ClientesPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Leads com status <span className="font-medium text-green-700">Fechado</span> — {clientes.length} cliente{clientes.length !== 1 ? "s" : ""}
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Clientes</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Leads com status <span className="font-medium text-green-600 dark:text-green-400">Fechado</span> — {clientes.length} cliente{clientes.length !== 1 ? "s" : ""}
         </p>
       </div>
 
       {clientes.length === 0 ? (
-        <div className="rounded-xl border border-gray-200 bg-white py-16 text-center">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-16 text-center">
           <p className="text-gray-400">Nenhum cliente ainda.</p>
           <p className="mt-1 text-sm text-gray-400">
             Mude o status de um lead para <span className="font-medium">Fechado</span> para ele aparecer aqui.
@@ -37,21 +37,21 @@ export default async function ClientesPage() {
             <Link
               key={cliente.id}
               href={`/dashboard/leads/${cliente.id}`}
-              className="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+              className="group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="mb-3 flex items-start justify-between">
                 <div>
-                  <p className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                  <p className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
                     {cliente.name}
                   </p>
-                  <span className="inline-block mt-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                  <span className="inline-block mt-1 rounded-full bg-green-100 dark:bg-green-900/40 px-2 py-0.5 text-xs font-medium text-green-700 dark:text-green-400">
                     Cliente
                   </span>
                 </div>
-                <ExternalLink className="h-4 w-4 text-gray-300 group-hover:text-primary transition-colors" />
+                <ExternalLink className="h-4 w-4 text-gray-300 dark:text-gray-600 group-hover:text-primary transition-colors" />
               </div>
 
-              <div className="space-y-1.5 text-sm text-gray-600">
+              <div className="space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
                 <div className="flex items-center gap-2">
                   <Building2 className="h-3.5 w-3.5 shrink-0 text-gray-400" />
                   <span className="truncate">{cliente.company}</span>
@@ -71,7 +71,7 @@ export default async function ClientesPage() {
               </div>
 
               {cliente.notes && (
-                <p className="mt-3 line-clamp-2 text-xs text-gray-400 border-t border-gray-100 pt-3">
+                <p className="mt-3 line-clamp-2 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-100 dark:border-gray-700 pt-3">
                   {cliente.notes}
                 </p>
               )}

@@ -24,6 +24,8 @@ const EMPTY_FORM = {
   notes: "",
 };
 
+const inputCls = "w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary";
+
 export default function CadastroPage() {
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
@@ -52,181 +54,102 @@ export default function CadastroPage() {
     e.preventDefault();
     setSaving(true);
     setFeedback(null);
-
     const supabase = createSupabaseBrowser();
     const { error } = await supabase.from("leads").insert([form]);
-
     if (error) {
       setFeedback({ type: "error", message: "Erro ao cadastrar lead. Tente novamente." });
     } else {
       setFeedback({ type: "success", message: "Lead cadastrado com sucesso!" });
       setForm(EMPTY_FORM);
     }
-
     setSaving(false);
   }
 
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Cadastrar Lead</h1>
-        <p className="mt-1 text-sm text-gray-500">Adicione um novo lead manualmente ao CRM.</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Cadastrar Lead</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Adicione um novo lead manualmente ao CRM.</p>
       </div>
 
       {feedback && (
-        <div
-          className={`mb-6 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium ${
-            feedback.type === "success"
-              ? "bg-green-50 text-green-700"
-              : "bg-red-50 text-red-700"
-          }`}
-        >
-          {feedback.type === "success" ? (
-            <CheckCircle className="h-5 w-5 shrink-0" />
-          ) : (
-            <AlertCircle className="h-5 w-5 shrink-0" />
-          )}
+        <div className={`mb-6 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium ${
+          feedback.type === "success" ? "bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400" : "bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400"
+        }`}>
+          {feedback.type === "success" ? <CheckCircle className="h-5 w-5 shrink-0" /> : <AlertCircle className="h-5 w-5 shrink-0" />}
           {feedback.message}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <form onSubmit={handleSubmit} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Nome completo <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              placeholder="Ex: João Silva"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
+            <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="Ex: João Silva" className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
               E-mail <span className="text-red-500">*</span>
             </label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              placeholder="joao@empresa.com"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
+            <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="joao@empresa.com" className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Telefone <span className="text-red-500">*</span>
             </label>
-            <input
-              type="tel"
-              name="phone"
-              value={form.phone}
-              onChange={handlePhone}
-              required
-              placeholder="(11) 99999-9999"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
+            <input type="tel" name="phone" value={form.phone} onChange={handlePhone} required placeholder="(11) 99999-9999" className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Empresa <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
-              name="company"
-              value={form.company}
-              onChange={handleChange}
-              required
-              placeholder="Nome da empresa"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
+            <input type="text" name="company" value={form.company} onChange={handleChange} required placeholder="Nome da empresa" className={inputCls} />
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Faturamento mensal <span className="text-red-500">*</span>
             </label>
-            <select
-              name="revenue_range"
-              value={form.revenue_range}
-              onChange={handleChange}
-              required
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            >
+            <select name="revenue_range" value={form.revenue_range} onChange={handleChange} required className={inputCls}>
               <option value="">Selecione uma faixa</option>
-              {REVENUE_RANGES.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
+              {REVENUE_RANGES.map((r) => <option key={r} value={r}>{r}</option>)}
             </select>
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
-              <span className="flex items-center gap-1.5">
-                <Instagram className="h-4 w-4 text-pink-500" />
-                Instagram
-              </span>
+            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <Instagram className="h-4 w-4 text-pink-500" /> Instagram
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">@</span>
               <input
-                type="text"
-                name="instagram"
-                value={form.instagram}
-                onChange={handleChange}
+                type="text" name="instagram" value={form.instagram} onChange={handleChange}
                 placeholder="usuario"
-                className="w-full rounded-lg border border-gray-300 py-2.5 pl-7 pr-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white py-2.5 pl-7 pr-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
               />
             </div>
           </div>
 
           <div className="sm:col-span-2">
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Status inicial</label>
-            <select
-              name="status"
-              value={form.status}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            >
-              {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
-                <option key={key} value={key}>
-                  {cfg.label}
-                </option>
-              ))}
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Status inicial</label>
+            <select name="status" value={form.status} onChange={handleChange} className={inputCls}>
+              {Object.entries(STATUS_CONFIG).map(([key, cfg]) => <option key={key} value={key}>{cfg.label}</option>)}
             </select>
           </div>
 
           <div className="sm:col-span-2">
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Notas</label>
-            <textarea
-              name="notes"
-              value={form.notes}
-              onChange={handleChange}
-              rows={4}
-              placeholder="Informações adicionais sobre o lead..."
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
+            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Notas</label>
+            <textarea name="notes" value={form.notes} onChange={handleChange} rows={4} placeholder="Informações adicionais sobre o lead..." className={inputCls} />
           </div>
         </div>
 
         <div className="mt-6 flex justify-end">
-          <button
-            type="submit"
-            disabled={saving}
-            className="rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
-          >
+          <button type="submit" disabled={saving} className="rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:opacity-60">
             {saving ? "Cadastrando..." : "Cadastrar lead"}
           </button>
         </div>
